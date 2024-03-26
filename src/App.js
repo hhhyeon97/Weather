@@ -17,6 +17,11 @@ function App() {
       getWeatherByCurrentLocation(lat, lon);
     });
   };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
+
   // 현재 위치 날씨 구하기
   const getWeatherByCurrentLocation = async (lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${apiKey}`;
@@ -43,10 +48,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
   return (
     <div
       style={{
@@ -56,8 +57,10 @@ function App() {
         backgroundSize: 'cover',
       }}
     >
-      <WeatherBox />
-      <WeatherBtn />
+      <div className="weather-area">
+        <WeatherBox />
+        <WeatherBtn />
+      </div>
     </div>
   );
 }
