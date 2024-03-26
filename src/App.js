@@ -9,7 +9,8 @@ const apiKey = '74283380a215dbfef8e3232bcff5db70';
 function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
   const [weather, setWeather] = useState(null);
-
+  const [city, setCity] = useState('');
+  const cities = ['sweden', 'new york', 'tokyo', 'seattle', 'seoul'];
   // 현재 위치 구하기
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -21,12 +22,32 @@ function App() {
   };
 
   useEffect(() => {
-    getCurrentLocation();
-  }, []);
+    if (city === '') {
+      getCurrentLocation();
+    } else {
+      getWeatherByCity();
+    }
+  }, [city]);
+
+  // 도시별 날씨 구하기
+  const getWeatherByCity = async () => {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let response = await fetch(url);
+    let data = await response.json();
+    // console.log('도시별 날씨 data', data);
+    setWeather(data);
+  };
+
+  /*
+  useEffect(() => {
+    // console.log('city?', city);
+    getWeatherByCity();
+  }, [city]); // city상태 주시하자는 의미!
+*/
 
   // 현재 위치 날씨 구하기
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${apiKey}&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     let response = await fetch(url);
     let data = await response.json();
     //console.log('날씨 데이터', data);
@@ -61,8 +82,8 @@ function App() {
       }}
     >
       <div className="weather-area">
-        <WeatherBox weather={weather} />
-        <WeatherBtn />
+        <WeatherBox weather={weather} /> {/*함수도 props로 보내줄 수 있음!*/}
+        <WeatherBtn cities={cities} setCity={setCity} />
       </div>
     </div>
   );
