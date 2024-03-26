@@ -5,7 +5,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-const apiKey = '74283380a215dbfef8e3232bcff5db70';
+const apiKey = process.env.REACT_APP_API_KEY;
 
 function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
