@@ -3,6 +3,7 @@ import WeatherBox from './component/WeatherBox.js';
 import WeatherBtn from './component/WeatherBtn.js';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const apiKey = '74283380a215dbfef8e3232bcff5db70';
 
@@ -10,6 +11,7 @@ function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState('');
+  const [loading, setLoading] = useState(false);
   const cities = ['sweden', 'new york', 'tokyo', 'seattle', 'seoul'];
   // 현재 위치 구하기
   const getCurrentLocation = () => {
@@ -32,10 +34,12 @@ function App() {
   // 도시별 날씨 구하기
   const getWeatherByCity = async () => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     // console.log('도시별 날씨 data', data);
     setWeather(data);
+    setLoading(false);
   };
 
   /*
@@ -48,10 +52,12 @@ function App() {
   // 현재 위치 날씨 구하기
   const getWeatherByCurrentLocation = async (lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     //console.log('날씨 데이터', data);
     setWeather(data);
+    setLoading(false);
 
     // 일출과 일몰 시간 가져오기
     const sunrise = new Date(data.sys.sunrise * 1000);
@@ -81,10 +87,17 @@ function App() {
         backgroundSize: 'cover',
       }}
     >
-      <div className="weather-area">
-        <WeatherBox weather={weather} /> {/*함수도 props로 보내줄 수 있음!*/}
-        <WeatherBtn cities={cities} setCity={setCity} />
-      </div>
+      {loading ? (
+        <div className="container">
+          <ClipLoader color="white" loading={loading} size={50} />
+        </div>
+      ) : (
+        <div className="weather-area">
+          <ClipLoader color="white" loading={loading} size={50} />
+          <WeatherBox weather={weather} /> {/*함수도 props로 보내줄 수 있음!*/}
+          <WeatherBtn cities={cities} setCity={setCity} selectedCity={city} />
+        </div>
+      )}
     </div>
   );
 }
