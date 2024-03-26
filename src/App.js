@@ -5,8 +5,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const apiKey = '74283380a215dbfef8e3232bcff5db70';
+
 function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
+  const [weather, setWeather] = useState('null');
 
   // 현재 위치 구하기
   const getCurrentLocation = () => {
@@ -24,10 +26,11 @@ function App() {
 
   // 현재 위치 날씨 구하기
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${apiKey}`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&lang=kr&appid=${apiKey}&units=metric`;
     let response = await fetch(url);
     let data = await response.json();
-    console.log('날씨 데이터', data);
+    //console.log('날씨 데이터', data);
+    setWeather(data);
 
     // 일출과 일몰 시간 가져오기
     const sunrise = new Date(data.sys.sunrise * 1000);
@@ -58,7 +61,7 @@ function App() {
       }}
     >
       <div className="weather-area">
-        <WeatherBox />
+        <WeatherBox weather={weather} />
         <WeatherBtn />
       </div>
     </div>
