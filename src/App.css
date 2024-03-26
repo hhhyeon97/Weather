@@ -39,7 +39,7 @@
   margin-bottom: 10px;
 }
 .weather-desc {
-  font-size: 25px;
+  font-size: 18px;
 }
 .humidity {
   color: rgb(62, 135, 245);
@@ -57,6 +57,11 @@
   text-align: center;
   font-size: 40px;
   font-weight: bold;
+}
+
+.icon-image {
+  position: relative;
+  bottom: 3px;
 }
 
 @media only screen and (max-width: 600px) {

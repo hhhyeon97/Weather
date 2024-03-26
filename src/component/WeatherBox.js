@@ -1,4 +1,5 @@
 import React from 'react';
+import weatherDescKo from '../data/weatherDescKo';
 
 const WeatherBox = ({ weather }) => {
   console.log('weather?', weather);
@@ -14,7 +15,17 @@ const WeatherBox = ({ weather }) => {
           <i className="fa-solid fa-droplet"></i> {weather?.main.humidity} %
         </span>
       </div>
-      <div className="weather-desc">{weather?.weather[0].description}</div>
+      <div className="weather-desc">
+        <i>
+          <img
+            className="icon-image"
+            src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}.png`}
+            alt=""
+          />
+        </i>
+        {/*weather?.weather[0].description*/}
+        {weatherDescKo[weather?.weather[0].id]}
+      </div>
     </div>
   );
 };
