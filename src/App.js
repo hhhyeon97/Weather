@@ -8,7 +8,7 @@ const apiKey = '74283380a215dbfef8e3232bcff5db70';
 
 function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
-  const [weather, setWeather] = useState('null');
+  const [weather, setWeather] = useState(null);
 
   // 현재 위치 구하기
   const getCurrentLocation = () => {
