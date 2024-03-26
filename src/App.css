@@ -52,6 +52,13 @@
   height: 100vh;
 }
 
+.container h2 {
+  color: white;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 600px) {
   .weather-box {
     width: 80%;
