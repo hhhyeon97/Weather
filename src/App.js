@@ -12,6 +12,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('');
   const [apiError, setAPIError] = useState('');
   const cities = ['sweden', 'new york', 'tokyo', 'seattle', 'seoul'];
   // 현재 위치 구하기
@@ -90,6 +91,32 @@ function App() {
     }
   };
 
+  /* 검색 기능 */
+  const search = async (e) => {
+    if (e.key === 'Enter') {
+      if (query.trim() !== '') {
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`,
+        )
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('올바른 도시명을 입력해주세요.');
+            }
+            return res.json();
+          })
+          .then((result) => {
+            setWeather(result);
+            setAPIError(null); // 에러 초기화
+            setQuery(''); // 검색 성공 후 검색어 초기화
+          })
+          .catch((error) => {
+            //console.error('Error fetching data:', error);
+            setAPIError(error.message);
+          });
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -99,6 +126,16 @@ function App() {
         backgroundSize: 'cover',
       }}
     >
+      <div className="search-area">
+        <input
+          id="inputCity"
+          type="text"
+          placeholder="도시명을 영어로 검색해주세요 : )"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={search}
+        />
+      </div>
       {loading ? (
         <div className="container">
           <ClipLoader color="white" loading={loading} size={50} />
