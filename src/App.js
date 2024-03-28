@@ -148,7 +148,7 @@ function App() {
         </div>
       ) : (
         <div className="container">
-          <h2>{apiError}</h2>
+          <h4>{apiError}</h4>
         </div>
       )}
     </div>

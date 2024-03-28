@@ -56,16 +56,15 @@
   height: 80vh;
 }
 
-.container h2 {
-  color: white;
+.container h4 {
+  color: rgb(86, 127, 216);
   text-align: center;
-  font-size: 40px;
+  font-size: 25px;
   font-weight: bold;
-}
-
-.icon-image {
-  position: relative;
-  bottom: 3px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .wrap {
